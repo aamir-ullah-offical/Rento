@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="./css/logs.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <form id="loginForm">
+      <h1 id="formHeading">Login</h1> <!-- Heading to change dynamically -->
+      
+      <div class="floating-label">
+        <input type="text" id="email" name="email" placeholder=" " required>
+        <label for="email" id="emailLabel">Email</label> <!-- Label for email -->
+      </div>
+
+      <div class="floating-label password-toggle">
+        <input type="password" id="password" name="password" placeholder=" " required>
+        <label for="password" id="passwordLabel">Password</label>
+        <i class='bx bx-show' id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+      </div>
+      
+
+      <div class="remember-forgot">
+        <label><input type="checkbox" id="rememberMe"> Remember me</label>
+        <a href="javascript:void(0);" onclick="toggleForgotPassword()">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn" id="loginButton">Login</button> <!-- Button text to be changed -->
+      
+      <div class="register-link">
+        <p>Don't have an account? <a href="./register.html">Register</a></p>
+      </div>
+
+      <div id="message"></div> <!-- Message area for success/error -->
+    </form>
+  </div>
+
+  <!-- JS files -->
+  <script src="./js/auth.js"></script> <!-- Auth logic (for login) -->
+  <script src="./js/login.js"></script> <!-- Forgot password logic -->
+  <!-- <script src="./js/logintesting.js"></script> Forgot password logic -->
+
+</body>
+
+</html>

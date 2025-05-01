@@ -1,0 +1,244 @@
+/* Basic Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    width: 95%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.mobile-only {
+    display: none;
+}
+
+.navbar .logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 24px;
+    font-weight: 700;
+    color: wheat;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: wheat;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #0ff;
+    text-decoration: underline;
+}
+
+.navbar .sign-in {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: wheat;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.navbar .sign-in:hover {
+    background-color: #0ff;
+    color: #000;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: wheat;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+/* Hamburger Animation */
+.hamburger.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+
+/* User Dropdown Container */
+.user-dropdown {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+/* Toggle wrapper (icon + caret + username) */
+.user-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+/* User icon and caret in a row */
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Icon and caret style */
+.icon-wrapper i {
+    font-size: 20px;
+    color: wheat;
+}
+
+/* Username styling */
+#user-name {
+    font-size: 14px;
+    color: wheat;
+}
+
+/* Caret animation */
+#caretIcon {
+    transition: transform 0.3s ease;
+    transform: rotate(0deg);
+}
+
+#caretIcon.rotate {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: black;
+    border: 1px solid wheat;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Show dropdown when active */
+.dropdown-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Dropdown links */
+.dropdown-menu a {
+    color: wheat;
+    text-decoration: none;
+    padding: 5px 0;
+}
+
+.dropdown-menu a:hover {
+    color: orange;
+}
+
+/* Active nav link */
+.navbar .nav-links a.active {
+    color: cyan;
+    border-bottom: 2px solid cyan;
+}
+
+@media (max-width: 991px) {
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: #111;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px !important;
+        padding: 5px 0;
+        transform: translateY(-200%);
+        transition: transform 0.4s ease-in-out;
+        z-index: 999;
+        text-transform: uppercase;
+    }
+
+    .nav-links.active {
+        transform: translateY(0%);
+    }
+
+    .nav-links a {
+        color: wheat;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        font-weight: 500;
+        padding: 10px 20px;
+        text-align: center;
+        width: 100%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #222; /* optional for separation */
+    }
+
+    .nav-links a:hover {
+        color: #0ff;
+        text-decoration: underline;
+    }
+
+    .hamburger {
+        display: flex;
+        margin-right: 25px;
+    }
+
+    .user-dropdown {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: block !important;
+    }
+
+    .home-section{
+        height: 750px !important;
+        max-height: 1000px !important;
+    }
+    .contact-section {
+        height: 850px !important;
+        max-height: 1000px !important;
+    }
+    .home-section >.hero > img{
+        height: 750px !important;
+    }
+}
+
