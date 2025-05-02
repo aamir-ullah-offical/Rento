@@ -16,7 +16,7 @@ function protectPages() {
     // Routes only accessible when logged in
     const privateRoutes = [
         '/home.html',
-        '/rento/home.html'
+        '/Rento/home.html'
     ];
 
     const isPublicRoute = publicRoutes.includes(path);
