@@ -1,42 +1,27 @@
-function protectPages() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
+  function protectPages() {
+      const loggedInUser = localStorage.getItem('loggedInUser');
 
-    // Normalize current path
-    let path = window.location.pathname.toLowerCase();
-    path = path.replace(/\/+$/, ''); // Remove trailing slashes
-    if (path === '' || path === '/') path = '/index.html';
+      let path = window.location.pathname.toLowerCase();
+      path = path.replace(/\/+$/, '');
+      if (path === '' || path === '/') path = '/index.html';
 
-    // Routes that don't require login
-    const publicRoutes = [
-        '/index.html',
-        '/register.html',
-        '/'
-    ];
+      const publicRoutes = ['/index.html', '/register.html'];
+      const privateRoutes = ['/rento/home.html', '/home.html'];
 
-    // Routes only accessible when logged in
-    const privateRoutes = [
-        '/home.html',
-        '/Rento/home.html'
-    ];
+      const isPublicRoute = publicRoutes.includes(path);
+      const isPrivateRoute = privateRoutes.includes(path);
 
-    const isPublicRoute = publicRoutes.includes(path);
-    const isPrivateRoute = privateRoutes.includes(path);
+      if (loggedInUser) {
+          if (path === '/register.html' || path === '/index.html') {
+              window.location.replace('/rento/home.html');
+              return;
+          }
+      } else {
+          if (!isPublicRoute) {
+              window.location.replace('/index.html');
+              return;
+          }
+      }
+  }
 
-    // ✅ User is logged in
-    if (loggedInUser) {
-        // Prevent access to login/register
-        if (path === '/' || path === '/register.html' || path === '/index.html') {
-            window.location.replace('/home.html');
-            return;
-        }
-    } else {
-        // ✅ User is NOT logged in
-        if (!isPublicRoute) {
-            // Block access to private or unknown pages
-            window.location.replace('/index.html');
-            return;
-        }
-    }
-
-    // ✅ All checks passed, allow access
-}
+  protectPages();
