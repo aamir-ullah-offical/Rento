@@ -6,6 +6,6 @@ document.querySelectorAll('.logoutLink').forEach(function(logoutLink) {
         localStorage.removeItem('loggedInUser');
 
         // Redirect to the login page
-        window.location.href = './login.html';
+        window.location.href = './index.html';
     });
 });

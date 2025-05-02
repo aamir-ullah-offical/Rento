@@ -1,0 +1,380 @@
+<html>
+
+<head>
+
+    <title>Affordable Car Rentals</title>
+    <script src="/js/auth.js"></script>
+    <script>
+        protectPages();
+    </script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/pageLoader.css" />
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/home.css" />
+    <link rel="stylesheet" href="./css/galary.css" />
+    <link rel="stylesheet" href="./css/about.css" />
+    <link rel="stylesheet" href="./css/todo.css" />
+    <link rel="stylesheet" href="./css/contact.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+    <link rel="stylesheet" href="./css/profile.css" />
+
+</head>
+
+<body>
+    <!-- Page Loader -->
+    <div id="pageLoader">
+        <div class="spinner"></div>
+    </div>
+    <!-- navbar -->
+    <div class="navbar">
+        <a href="./home.html" class="logo">Rento</a>
+
+        <!-- Hamburger Icon -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Navigation Links (including Profile + Logout in mobile view) -->
+        <div class="nav-links" id="navLinks">
+            <a href="#home">HOME</a>
+            <a href="#galary">GALARY</a>
+            <a href="#about">ABOUT</a>
+            <a href="#todo">MY PLAINING</a>
+            <a href="#contact">CONTACT</a>
+            <a href="#" class="profileLink mobile-only">Profile</a>
+            <a href="#" class="logoutLink mobile-only">Logout</a>
+        </div>
+
+        <!-- User Dropdown (hidden in mobile) -->
+        <div class="user-dropdown" id="userDropdown">
+            <div class="user-toggle" id="userToggle">
+                <div class="icon-wrapper">
+                    <i class="fas fa-user"></i>
+                    <i id="caretIcon" class="fas fa-caret-down"></i>
+                </div>
+                <span id="user-name"></span>
+            </div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#" class="profileLink">Profile</a>
+                <a href="./login.html" class="logoutLink">Logout</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- Profile Popup -->
+    <div id="profilePopup" class="profile-popup hidden">
+        <div class="popup-content">
+            <span id="closePopup" class="close-btn">&times;</span>
+
+            <h2>My Profile</h2>
+            <p><strong>Username:</strong> <span id="popupUsername">N/A</span></p>
+            <p><strong>Email:</strong> <span id="popupEmail">N/A</span></p>
+
+            <hr>
+
+            <!-- Toggle Buttons for Forms -->
+            <button type="button" onclick="toggleSection('changePassword')">Change Password</button>
+            <button type="button" onclick="toggleSection('forgotPassword')">Forgot Password</button>
+            <button type="button" onclick="toggleSection('generatePassword')">Generate Strong Password</button>
+
+            <!-- Change Password Form -->
+            <div id="changePasswordForm" style="display: block;">
+                <h3>Change Password</h3>
+                <form id="changePasswordFormInner">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required>
+                    <i class="bx bx-show" id="togglePassword1"></i>
+
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                    <i class="bx bx-show" id="togglePassword2"></i>
+
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" required>
+                    <i class="bx bx-show" id="togglePassword3"></i>
+
+                    <div id="passwordMessage" class="message"></div>
+
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+            <!-- Forgot Password Form -->
+            <div id="forgotPasswordForm" style="display: none;">
+                <h3>Forgot Password</h3>
+                <label for="forgotUsername">Username</label>
+                <input type="text" id="forgotUsername" required>
+
+                <label for="forgotEmail">Email</label>
+                <input type="email" id="forgotEmail" required>
+
+                <div id="forgotMessage" class="message"></div>
+
+                <button type="button" onclick="verifyForgotPassword()">Verify</button>
+            </div>
+
+            <!-- Password Generator Section -->
+            <div id="generatePassword" style="display: none;">
+                <h3>Generate Strong Password</h3>
+                <input type="text" id="generatedPassword" readonly />
+                <button type="button" id="copyBtn" onclick="copyPassword()" title="Copy Password">
+                    <i id="copyIcon" class="fas fa-copy"></i>
+                </button>
+
+                <!-- Password Length -->
+                <label>Password Length:</label>
+                <div class="passwordRange" style="display: flex;">
+                    <input type="range" id="passwordLength" min="6" max="64" value="8"
+                        oninput="updatePasswordLengthValue(this.value)" />
+                    <span id="passwordLengthValue">12</span>
+                </div>
+                <!-- Checkboxes for character types -->
+                <div class="checkboxes">
+                    <label><input type="checkbox" id="includeUppercase" checked /> Uppercase</label>
+                    <label><input type="checkbox" id="includeLowercase" checked /> Lowercase</label>
+                    <label><input type="checkbox" id="includeNumbers" checked /> Numbers</label>
+                    <label><input type="checkbox" id="includeSymbols" /> Symbols</label>
+                </div>
+
+                <div id="passwordStrengthMessage" class="message"></div>
+
+                <button type="button" onclick="generateStrongPassword()">Generate Password</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- home  -->
+    <section class="reveal home-section" id="home">
+        <div class="hero">
+            <img alt="Background image of a car dashboard" height="500px" src="./images/bg.avif" width="1920" />
+            <div class="content">
+                <h1>Find the Perfect Car for Rent</h1>
+                <h2>
+                    Affordable and Reliable Car Rentals
+                    <span> For Every Journey </span>
+                </h2>
+                <p>
+                    Discover a wide selection of cars at unbeatable prices. Whether
+                    you're going on a vacation or need a car for a business trip, we
+                    offer the best rental options tailored to your needs.
+                </p>
+                <a class="btn" href="#galary"> Explore Our Fleet </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal galart-section" id="galary">
+        <div class="galary-container">
+            <h1>Explore Our Wide Range of Cars</h1>
+            <p>
+                From luxury sedans to rugged SUVs, we offer a variety of vehicles to
+                meet your rental needs. Find the perfect ride for any occasion and hit
+                the road in style.
+            </p>
+            <div class="cars">
+                <div class="car">
+                    <img alt="Image of a Hundai car" height="200" src="./images/hyundai.avif" width="300" />
+                    <div class="car-name">Hyundai</div>
+                </div>
+                <div class="car">
+                    <img alt="Image of an Audi car" height="200" src="./images/audi.avif" width="300" />
+                    <div class="car-name">Audi</div>
+                </div>
+                <div class="car">
+                    <img alt="Image of a BMW X5 car" height="200" src="./images/bmw.avif" width="300" />
+                    <div class="car-name">BMW X5</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- about section   -->
+    <section class="reveal about-section" id="about">
+        <div class="about-container">
+            <h1>Why Choose Us</h1>
+            <p>
+                We offer a seamless and hassle-free car rental experience. Whether
+                you're looking for a short-term rental or a long-term lease, our fleet
+                is well-maintained, reliable, and ready to serve your needs.
+            </p>
+            <div class="feature">
+                <img alt="Icon with number 1" height="80" src="./images/icon-1.avif" width="80" />
+                <p>
+                    Wide Variety of Cars: Choose from a diverse selection of vehicles to
+                    match your travel needs. From compact cars to spacious SUVs, we have
+                    the perfect ride for every journey.
+                </p>
+            </div>
+            <div class="feature">
+                <img alt="Icon with number 2" height="80" src="./images/icon-2.avif" width="80" />
+                <p>
+                    Affordable Pricing: Enjoy competitive rates and flexible rental
+                    terms. We offer transparent pricing with no hidden fees, ensuring
+                    you get the best value for your rental.
+                </p>
+            </div>
+            <div class="feature">
+                <img alt="Icon with number 3" height="80" src="./images/icon-3.avif" width="80" />
+                <p>
+                    Excellent Customer Support: Our dedicated customer service team is
+                    here to assist you at every step of the way, ensuring a smooth and
+                    pleasant rental experience from start to finish.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Plaining  -->
+    <section class="reveal todo-section" id="todo">
+        <div class="app">
+            <h1>📝 My Planing...</h1>
+            <div class="input-section">
+                <input type="text" id="taskInput" placeholder="Add a new task..." />
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="taskList"></ul>
+        </div>
+        </div>
+
+    </section>
+
+    <!-- Contact for book A Car  -->
+    <section class="reveal contact-section" id="contact">
+        <!-- <div class="contact-section"> -->
+        <div class="overlay"></div>
+        <div class="contact-container">
+            <div class="contact-left">
+                <h2>Get in Touch</h2>
+                <p>
+                    We'd love to hear from you! Whether you have a question about our
+                    services, pricing, or anything else, our team is ready to answer all
+                    your questions.
+                </p>
+                <div class="contact-details">
+                    <p>
+                        <i class="fas fa-phone-alt"></i>
+                        +92 234 567 890
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i>
+                        contact@example.com
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        SMIT Peshawar, Pakistan
+                    </p>
+                </div>
+            </div>
+            <div class="contact-right">
+                <div class="contact-form">
+                    <h2>Contact Us</h2>
+                    <div id="formMessage" class="form-message"></div> <!-- Message Display -->
+                    <div class="form-group">
+                        <input id="name" placeholder="" type="text" />
+                        <label for="name">Your Name</label>
+                    </div>
+                    <div class="form-group">
+                        <input id="email" placeholder="" type="email" />
+                        <label for="email">Your Email</label>
+                    </div>
+                    <div class="form-group">
+                        <select id="car">
+                            <option value="" disabled selected>Select a car</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Audi">Audi</option>
+                            <option value="BMW">BMW</option>
+                        </select>
+                        <label for="car">Select Car</label>
+                    </div>
+                    <div class="form-group">
+                        <input id="dates" placeholder="" type="date" />
+                        <label for="dates">Rental Dates</label>
+                    </div>
+                    <div class="form-group message">
+                        <textarea id="message" placeholder="Your Message" rows="5"></textarea>
+                        <label for="message" id="messageLabel">Your Message</label>
+                    </div>
+                    <div class="form-group">
+                        <button id="sendBtn" type="button">Send Message</button>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+    </section>
+
+    <footer class="reveal footer">
+        <div class="main-section">
+            <div class="column">
+                <h3>About Us</h3>
+                <p>
+                    We are a team of passionate individuals dedicated to providing the
+                    best services and products to our customers.
+                </p>
+            </div>
+            <div class="column">
+                <h3>Quick Links</h3>
+                <a href="#home"> Home </a>
+                <a href="#about"> About </a>
+                <a href="#galary"> Galary </a>
+                <a href="#team"> Our Team </a>
+                <a href="#contact"> Contact Us </a>
+            </div>
+            <div class="column">
+                <h3>Contact Us</h3>
+                <p>
+                    <i class="fas fa-envelope"> </i>
+                    email@example.com
+                </p>
+                <p>
+                    <i class="fas fa-phone"> </i>
+                    +123 456 7890
+                </p>
+                <p>
+                    <i class="fas fa-map-marker-alt"> </i>
+                    SMIT, PEshawar, Pakistan.
+                </p>
+            </div>
+            <div class="column social-icons">
+                <h3>Follow Us</h3>
+                <a href="#">
+                    <i class="fab fa-facebook-f"> </i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-twitter"> </i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-instagram"> </i>
+                </a>
+                <a href="#">
+                    <i class="fab fa-linkedin-in"> </i>
+                </a>
+            </div>
+        </div>
+        <div class="bottom-section">
+            <p>&copy; 2023 Your Company. All rights reserved.</p>
+            <p>
+                Designed by
+                <a href="#team"> Team Alpha </a>
+            </p>
+            <p>
+                <a href="#"> Privacy Policy </a>
+                |
+                <a href="#"> Terms of Service </a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/logout.js"></script>
+    <script src="./js/contact.js"></script>
+    <script src="./js/todo.js"></script>
+</body>
+
+</html>

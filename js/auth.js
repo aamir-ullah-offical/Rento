@@ -1,34 +1,42 @@
 function protectPages() {
     const loggedInUser = localStorage.getItem('loggedInUser');
-    const currentPath = window.location.pathname.toLowerCase();
 
-<<<<<<< HEAD
-    // Auto-redirect /team-alpha/ to /team-alpha/index.html
-    if (currentPath.endsWith('team-alpha/') && !currentPath.endsWith('index.html')) {
-        window.location.replace(currentPath + 'index.html');
-=======
-    // Redirect logged-out users away from protected pages
-    const isProtectedPage = currentPath === '/' || currentPath.endsWith('home.html');
-    if (isProtectedPage && !loggedInUser) {
-        window.location.href = 'login.html';
->>>>>>> fbd0b8d (auth correction)
-        return;
+    // Normalize current path
+    let path = window.location.pathname.toLowerCase();
+    path = path.replace(/\/+$/, ''); // Remove trailing slashes
+    if (path === '' || path === '/') path = '/index.html';
+
+    // Routes that don't require login
+    const publicRoutes = [
+        '/index.html',
+        '/register.html',
+        '/'
+    ];
+
+    // Routes only accessible when logged in
+    const privateRoutes = [
+        '/home.html',
+        '/rento/home.html'
+    ];
+
+    const isPublicRoute = publicRoutes.includes(path);
+    const isPrivateRoute = privateRoutes.includes(path);
+
+    // ✅ User is logged in
+    if (loggedInUser) {
+        // Prevent access to login/register
+        if (path === '/' || path === '/register.html' || path === '/index.html') {
+            window.location.replace('/home.html');
+            return;
+        }
+    } else {
+        // ✅ User is NOT logged in
+        if (!isPublicRoute) {
+            // Block access to private or unknown pages
+            window.location.replace('/index.html');
+            return;
+        }
     }
 
-    // Redirect logged-out users from protected pages
-    const isProtectedPage = currentPath.endsWith('team-alpha/index.html') || currentPath.endsWith('index.html');
-    if (isProtectedPage && !loggedInUser) {
-        window.location.replace('login.html');
-        return;
-    }
-
-    // Redirect logged-in users away from login/register pages
-    const isAuthPage = currentPath.includes('login') || currentPath.includes('register');
-    if (isAuthPage && loggedInUser) {
-<<<<<<< HEAD
-        window.location.replace('index.html');
-=======
-        window.location.href = 'home.html';
->>>>>>> fbd0b8d (auth correction)
-    }
+    // ✅ All checks passed, allow access
 }

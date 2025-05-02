@@ -33,7 +33,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
         e.target.reset();
 
         setTimeout(() => {
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         }, 500);
     }
 });
