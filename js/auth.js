@@ -1,27 +1,39 @@
-  function protectPages() {
-      const loggedInUser = localStorage.getItem('loggedInUser');
+function protectPages() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
 
-      let path = window.location.pathname.toLowerCase();
-      path = path.replace(/\/+$/, '');
-      if (path === '' || path === '/') path = '/index.html';
+    // Normalize path
+    let path = window.location.pathname.toLowerCase();
+    path = path.replace(/\/+$/, ''); // remove trailing slashes
+    if (path === '' || path === '/') path = '/index.html'; // treat '/' as '/index.html'
 
-      const publicRoutes = ['/index.html', '/register.html'];
-      const privateRoutes = ['/rento/home.html', '/home.html'];
+    // Routes that are allowed without login
+    const publicRoutes = ['/index.html', '/register.html'];
 
-      const isPublicRoute = publicRoutes.includes(path);
-      const isPrivateRoute = privateRoutes.includes(path);
+    // Routes only allowed after login
+    const privateRoutes = ['/rento/home.html', '/home.html'];
 
-      if (loggedInUser) {
-          if (path === '/register.html' || path === '/index.html') {
-              window.location.replace('/rento/home.html');
-              return;
-          }
-      } else {
-          if (!isPublicRoute) {
-              window.location.replace('/index.html');
-              return;
-          }
-      }
-  }
+    const isPublicRoute = publicRoutes.includes(path);
+    const isPrivateRoute = privateRoutes.includes(path);
 
-  protectPages();
+    // 🔒 Logged-in users shouldn't access login or register pages
+    if (loggedInUser && isPublicRoute) {
+        window.location.replace('/rento/home.html');
+        return;
+    }
+
+    // 🔒 Not logged-in users can't access private pages
+    if (!loggedInUser && isPrivateRoute) {
+        window.location.replace('/index.html');
+        return;
+    }
+
+    // 🔒 Not logged-in users can't access unknown pages
+    if (!loggedInUser && !isPublicRoute && !isPrivateRoute) {
+        window.location.replace('/index.html');
+        return;
+    }
+
+    // ✅ All checks passed — allow access
+}
+
+protectPages();
