@@ -4,36 +4,36 @@ function protectPages() {
     // Normalize path
     let path = window.location.pathname.toLowerCase();
     path = path.replace(/\/+$/, ''); // remove trailing slashes
-    if (path === '' || path === '/') path = '/index.html'; // treat '/' as '/index.html'
+    if (path === '' || path === '/') path = '/index.html'; // treat root as index.html
 
-    // Routes that are allowed without login
+    // Routes allowed without login
     const publicRoutes = ['/index.html', '/register.html'];
 
-    // Routes only allowed after login
+    // Routes allowed only after login
     const privateRoutes = ['/rento/home.html', '/home.html'];
 
     const isPublicRoute = publicRoutes.includes(path);
     const isPrivateRoute = privateRoutes.includes(path);
 
-    // 🔒 Logged-in users shouldn't access login or register pages
-    if (loggedInUser && isPublicRoute) {
+    // 🔒 Redirect logged-in users away from only index.html (login), but allow /register.html
+    if (loggedInUser && path === '/index.html') {
         window.location.replace('/rento/home.html');
         return;
     }
 
-    // 🔒 Not logged-in users can't access private pages
+    // 🔒 Block non-logged-in users from private pages
     if (!loggedInUser && isPrivateRoute) {
         window.location.replace('/index.html');
         return;
     }
 
-    // 🔒 Not logged-in users can't access unknown pages
+    // 🔒 Block non-logged-in users from unknown (non-listed) pages
     if (!loggedInUser && !isPublicRoute && !isPrivateRoute) {
         window.location.replace('/index.html');
         return;
     }
 
-    // ✅ All checks passed — allow access
+    // ✅ All good — allow access
 }
 
 protectPages();
